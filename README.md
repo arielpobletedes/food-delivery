@@ -1,5 +1,10 @@
 # Food Delivery — Full-Stack NestJS + React Native Course
 
+Branche:
+
+- main: full app
+- feat_01_api: basic api is working
+
 A full-stack food delivery application built from scratch with NestJS and Expo. This is the companion repository for the **CodeWithLari** YouTube course.
 
 📺 **[Watch the full course on YouTube →](https://youtube.com/@codewithlari)**
@@ -11,6 +16,7 @@ A full-stack food delivery application built from scratch with NestJS and Expo. 
 A complete food delivery platform with three roles — customers order food, restaurant owners manage menus and fulfill orders, and drivers deliver in real time.
 
 **Customer**
+
 - Browse open restaurants with search and ratings
 - View menus, add items to cart, and place orders
 - Pay with Stripe (Payment Sheet)
@@ -19,6 +25,7 @@ A complete food delivery platform with three roles — customers order food, res
 - View order history and rate restaurant + driver after delivery
 
 **Restaurant owner**
+
 - Register and create one restaurant
 - Upload images via UploadThing
 - Manage categories and menu items
@@ -26,6 +33,7 @@ A complete food delivery platform with three roles — customers order food, res
 - View today's analytics (revenue, status breakdown)
 
 **Driver**
+
 - Toggle online / offline
 - Receive assigned orders via WebSocket
 - Navigate active delivery with live GPS broadcasting
@@ -33,6 +41,7 @@ A complete food delivery platform with three roles — customers order food, res
 - View delivery history
 
 **Backend**
+
 - JWT auth with role-based guards (`CUSTOMER`, `RESTAURANT_OWNER`, `DRIVER`)
 - Real-time order updates via Socket.IO
 - Stripe webhooks for payment confirmation
@@ -43,19 +52,19 @@ A complete food delivery platform with three roles — customers order food, res
 
 ## Stack
 
-| Layer | Tool |
-|---|---|
-| Monorepo | pnpm workspaces |
-| API | [NestJS](https://nestjs.com) |
-| Mobile | [Expo](https://expo.dev) + [Expo Router](https://docs.expo.dev/router/introduction/) |
-| Database | [Neon](https://neon.tech) — serverless Postgres |
-| ORM | [Drizzle ORM](https://orm.drizzle.team) |
-| Cache / GPS | [Upstash Redis](https://upstash.com) |
-| Payments | [Stripe](https://stripe.com) |
-| Real-time | [Socket.IO](https://socket.io) |
-| File uploads | [UploadThing](https://uploadthing.com) |
-| Shared types | `@food-delivery/types` workspace package |
-| Package manager | pnpm |
+| Layer           | Tool                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------ |
+| Monorepo        | pnpm workspaces                                                                      |
+| API             | [NestJS](https://nestjs.com)                                                         |
+| Mobile          | [Expo](https://expo.dev) + [Expo Router](https://docs.expo.dev/router/introduction/) |
+| Database        | [Neon](https://neon.tech) — serverless Postgres                                      |
+| ORM             | [Drizzle ORM](https://orm.drizzle.team)                                              |
+| Cache / GPS     | [Upstash Redis](https://upstash.com)                                                 |
+| Payments        | [Stripe](https://stripe.com)                                                         |
+| Real-time       | [Socket.IO](https://socket.io)                                                       |
+| File uploads    | [UploadThing](https://uploadthing.com)                                               |
+| Shared types    | `@food-delivery/types` workspace package                                             |
+| Package manager | pnpm                                                                                 |
 
 ---
 
@@ -114,9 +123,11 @@ pnpm start
 > **Maps & GPS:** Google Maps and background location require a **development build** (`npx expo run:ios` / `run:android`), not Expo Go.
 
 > **Stripe webhooks (local):** Forward events with the [Stripe CLI](https://stripe.com/docs/stripe-cli):
+>
 > ```bash
 > stripe listen --forward-to localhost:3000/api/payments/webhook
 > ```
+>
 > Copy the webhook signing secret into `STRIPE_WEBHOOK_SECRET` in `apps/api/.env`.
 
 ---
