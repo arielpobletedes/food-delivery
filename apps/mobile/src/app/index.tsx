@@ -2,6 +2,7 @@ import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { HealthCheckResponse } from "@food-delivery/types";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { useTimestamp } from "react-native-reanimated";
 
 export default function HomeScreen() {
   const {
@@ -15,24 +16,70 @@ export default function HomeScreen() {
   });
 
   return (
-    <View>
-      <Text>Food delivery</Text>
-      <Text>Connection Text</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Food delivery</Text>
+      <Text style={styles.subtitle}>Connection Text</Text>
 
       {isLoading && <ActivityIndicator size="large" color="ff6b35" />}
 
       {health && (
-        <View>
-          <Text>Api Status: {health.status}</Text>
-          <Text>{new Date(health.timestamp).toLocaleDateString()}</Text>
+        <View style={styles.statusBox}>
+          <Text style={styles.statusText}>Api Status: {health.status}</Text>
+          <Text style={styles.timestampText}>
+            {new Date(health.timestamp).toLocaleDateString()}
+          </Text>
         </View>
       )}
 
       {error && (
-        <View>
-          <Text>Could not reach the API. Is the server running?</Text>
+        <View style={styles.errorBox}>
+          <Text style={styles.errorText}>
+            Could not reach the API. Is the server running?
+          </Text>
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 24,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "700",
+    marginBottom: 6,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#999",
+    marginBottom: 32,
+  },
+  statusBox: {
+    backgroundColor: "#F0FFF4",
+    borderRadius: 12,
+    padding: 20,
+    alignItems: "center",
+    width: "100%",
+  },
+  statusText: { fontSize: 18, fontWeight: "600", color: "#22543D" },
+  timestampText: { fontSize: 14, color: "#666", marginTop: 6 },
+  errorBox: {
+    backgroundColor: "#FFF5F5",
+    borderRadius: 12,
+    padding: 20,
+    alignItems: "center",
+    width: "100%",
+  },
+  errorText: {
+    fontSize: 15,
+    color: "#E53E3E",
+    textAlign: "center",
+    lineHeight: 72,
+  },
+});
