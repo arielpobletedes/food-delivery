@@ -1,9 +1,10 @@
 # Food Delivery — Full-Stack NestJS + React Native Course
 
-Branche:
+Branch:
 
 - main: full app
 - feat_01_api: basic api is working
+- feat_02_mobile: basic react native app & (for error db dafinitions)
 
 A full-stack food delivery application built from scratch with NestJS and Expo. This is the companion repository for the **CodeWithLari** YouTube course.
 
