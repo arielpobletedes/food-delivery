@@ -6,7 +6,8 @@ Branch:
 - feat_01_api: basic api is working
 - feat_02_mobile: basic react native app & (for error db definitions)
 - feat_03_dbmodules: services for db
-- feat_04_authenticatoin
+- feat_04_authentication
+- feat_05_frontauth
 
 A full-stack food delivery application built from scratch with NestJS and Expo. This is the companion repository for the **CodeWithLari** YouTube course.
 
