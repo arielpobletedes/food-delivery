@@ -1,17 +1,61 @@
+import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import * as SplashScreen from "expo-splash-screen";
+import { Stack } from "expo-router";
+// import { StripeProvider } from '@stripe/stripe-react-native';
+
+import { logger } from "../utils/logger";
+
 import { AnimatedSplashOverlay } from "@/components/animated-icon";
-import AppTabs from "@/components/app-tabs";
+import { AuthProvider, useAuth } from "@/context/auth-context";
+import { UserRole } from "@food-delivery/types";
 
-const queryCLient = new QueryClient();
+const queryClient = new QueryClient();
 
-SplashScreen.preventAutoHideAsync();
+function RootNavigator() {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) return null;
+
+  logger.info(user, "app:_layout");
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="health" />
+
+      <Stack.Protected guard={!user}>
+        <Stack.Screen name="login" />
+        <Stack.Screen name="register" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!!user && user.role === UserRole.CUSTOMER}>
+        <Stack.Screen name="(customer)" />
+      </Stack.Protected>
+
+      <Stack.Protected
+        guard={!!user && user.role === UserRole.RESTAURANT_OWNER}
+      >
+        <Stack.Screen name="(owner)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!!user && user.role === UserRole.DRIVER}>
+        <Stack.Screen name="(driver)" />
+      </Stack.Protected>
+    </Stack>
+  );
+}
 
 export default function TabLayout() {
   return (
-    <QueryClientProvider client={queryCLient}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
+    <QueryClientProvider client={queryClient}>
+      {/* <StripeProvider
+        publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
+      > */}
+      <AuthProvider>
+        <AnimatedSplashOverlay />
+        <RootNavigator />
+      </AuthProvider>
+      {/* </StripeProvider> */}
     </QueryClientProvider>
   );
 }
