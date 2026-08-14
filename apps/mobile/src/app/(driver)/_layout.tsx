@@ -9,7 +9,7 @@ export default function DriverLayout() {
         <NativeTabs.Trigger.Icon sf="house.fill" md="home" />
       </NativeTabs.Trigger>
 
-      {/* <NativeTabs.Trigger name="active">
+      <NativeTabs.Trigger name="active">
         <NativeTabs.Trigger.Label>Active</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="car.fill" md="local_shipping" />
       </NativeTabs.Trigger>
@@ -17,7 +17,7 @@ export default function DriverLayout() {
       <NativeTabs.Trigger name="history">
         <NativeTabs.Trigger.Label>History</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="clock.fill" md="history" />
-      </NativeTabs.Trigger> */}
+      </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="profile">
         <NativeTabs.Trigger.Label>Profile</NativeTabs.Trigger.Label>

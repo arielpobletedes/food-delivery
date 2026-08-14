@@ -5,7 +5,22 @@ export default function CustomerLayout() {
   return (
     <NativeTabs>
       <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Customer</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="house.fill" md="home" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="search">
+        <NativeTabs.Trigger.Label>Search</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="magnifyingglass" md="search" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="cart">
+        <NativeTabs.Trigger.Label>Cart</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="bag.fill" md="shopping_cart" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="orders">
+        <NativeTabs.Trigger.Label>Orders</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="shippingbox.fill" md="local_shipping" />
       </NativeTabs.Trigger>
 
