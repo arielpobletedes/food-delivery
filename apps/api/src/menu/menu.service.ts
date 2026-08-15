@@ -12,8 +12,8 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
-import { CacheService } from '../cache/cache.service';
-import { CacheKeys } from '../cache/cache-keys';
+// import { CacheService } from '../cache/cache.service';
+// import { CacheKeys } from '../cache/cache-keys';
 
 @Injectable()
 export class MenuService {
@@ -21,16 +21,16 @@ export class MenuService {
 
   constructor(
     @Inject('DB') private db: NeonHttpDatabase<typeof schema>,
-    private cacheService: CacheService,
+    // private cacheService: CacheService,
   ) {}
 
-  private async invalidateMenuCache(restaurantId: string) {
-    await this.cacheService.del(
-      CacheKeys.MENU_CATEGORIES(restaurantId),
-      CacheKeys.MENU_ITEMS(restaurantId),
-    );
-    this.logger.log(`Menu cache invalidated for restaurant ${restaurantId}`);
-  }
+  // private async invalidateMenuCache(restaurantId: string) {
+  //   await this.cacheService.del(
+  //     CacheKeys.MENU_CATEGORIES(restaurantId),
+  //     CacheKeys.MENU_ITEMS(restaurantId),
+  //   );
+  //   this.logger.log(`Menu cache invalidated for restaurant ${restaurantId}`);
+  // }
 
   private async getRestaurantByOwner(ownerId: string) {
     const [restaurant] = await this.db
@@ -59,27 +59,27 @@ export class MenuService {
   }
 
   async getCategories(restaurantId: string) {
-    const cached = await this.cacheService.get<
-      (typeof schema.menuCategories.$inferSelect)[]
-    >(CacheKeys.MENU_CATEGORIES(restaurantId));
+    // const cached = await this.cacheService.get<
+    //   (typeof schema.menuCategories.$inferSelect)[]
+    // >(CacheKeys.MENU_CATEGORIES(restaurantId));
 
-    if (cached) {
-      this.logger.log(
-        `Returning categories for restaurant ${restaurantId} from cache`,
-      );
-      return cached;
-    }
+    // if (cached) {
+    //   this.logger.log(
+    //     `Returning categories for restaurant ${restaurantId} from cache`,
+    //   );
+    //   return cached;
+    // }
 
     const categories = this.db
       .select()
       .from(schema.menuCategories)
       .where(eq(schema.menuCategories.restaurantId, restaurantId));
 
-    await this.cacheService.set(
-      CacheKeys.MENU_CATEGORIES(restaurantId),
-      categories,
-      300,
-    );
+    // await this.cacheService.set(
+    //   CacheKeys.MENU_CATEGORIES(restaurantId),
+    //   categories,
+    //   300,
+    // );
 
     return categories;
   }
@@ -156,16 +156,16 @@ export class MenuService {
   }
 
   async getItemsByRestaurant(restaurantId: string) {
-    const cached = await this.cacheService.get<
-      (typeof schema.menuItems.$inferSelect)[]
-    >(CacheKeys.MENU_ITEMS(restaurantId));
+    // const cached = await this.cacheService.get<
+    //   (typeof schema.menuItems.$inferSelect)[]
+    // >(CacheKeys.MENU_ITEMS(restaurantId));
 
-    if (cached) {
-      this.logger.log(
-        `Returning menu items for restaurant ${restaurantId} from cache`,
-      );
-      return cached;
-    }
+    // if (cached) {
+    //   this.logger.log(
+    //     `Returning menu items for restaurant ${restaurantId} from cache`,
+    //   );
+    //   return cached;
+    // }
 
     // returns all items for a restaurant — frontend groups them by category
     const items = this.db
@@ -173,7 +173,7 @@ export class MenuService {
       .from(schema.menuItems)
       .where(eq(schema.menuItems.restaurantId, restaurantId));
 
-    await this.cacheService.set(CacheKeys.MENU_ITEMS(restaurantId), items, 300);
+    // await this.cacheService.set(CacheKeys.MENU_ITEMS(restaurantId), items, 300);
 
     return items;
   }
