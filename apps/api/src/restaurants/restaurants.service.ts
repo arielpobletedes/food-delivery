@@ -54,7 +54,7 @@ export class RestaurantsService {
       .select()
       .from(schema.restaurants)
       .where(eq(schema.restaurants.ownerId, ownerId));
-
+    console.log('Mine: ', restaurant);
     return restaurant ?? null;
   }
 

@@ -37,6 +37,7 @@ export class RestaurantsController {
   @UseGuards(RolesGuard)
   @Roles(UserRole.RESTAURANT_OWNER)
   findMine(@Request() req: AuthRequest) {
+    console.log('Mine: ', req);
     return this.restaurantsService.findMine(req.user.sub);
   }
 
