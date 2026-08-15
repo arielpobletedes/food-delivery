@@ -18,7 +18,7 @@ export default function OwnerHomeScreen() {
     queryKey: ["my-restaurant"],
     queryFn: () =>
       api
-        .get<RestaurantType | null>("/restaurant/mine")
+        .get<RestaurantType | null>("/restaurants/mine")
         .then((res) => res.data),
   });
 
