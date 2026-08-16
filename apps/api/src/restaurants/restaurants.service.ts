@@ -5,7 +5,7 @@ import {
   //Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { eq } from 'drizzle-orm'; //import { and, eq, ilike, or } from 'drizzle-orm';
+import { and, eq, or, ilike } from 'drizzle-orm'; //import { and, eq, ilike, or } from 'drizzle-orm';
 import { NeonHttpDatabase } from 'drizzle-orm/neon-http';
 import * as schema from '../db/schema';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
@@ -67,48 +67,42 @@ export class RestaurantsService {
     return restaurant;
   }
 
-  async findAll() {
-    return this.db.select().from(schema.restaurants);
+  async findAll(search?: string) {
+    if (search) {
+      return this.db
+        .select()
+        .from(schema.restaurants)
+        .where(
+          and(
+            eq(schema.restaurants.isOpen, true),
+            or(
+              ilike(schema.restaurants.name, `%${search}%`),
+              ilike(schema.restaurants.cuisineType, `%${search}%`),
+            ),
+          ),
+        );
+    }
+
+    // const cached = await this.cacheService.get<
+    //   (typeof schema.restaurants.$inferSelect)[]
+    // >(CacheKeys.RESTAURANTS_ALL);
+
+    // if (cached) {
+    //   this.logger.log('Returning restaurants from cache');
+    //   return cached;
+    // }
+
+    // this.logger.log('Cache miss — fetching restaurants from DB');
+
+    const restaurants = this.db
+      .select()
+      .from(schema.restaurants)
+      .where(eq(schema.restaurants.isOpen, true));
+
+    // await this.cacheService.set(CacheKeys.RESTAURANTS_ALL, restaurants, 300);
+
+    return restaurants;
   }
-
-  // async findAll(search?: string) {
-  //   // if search is provided, filter by name OR cuisine type (case-insensitive)
-  //   // only return open restaurants to customers
-  //   if (search) {
-  //     return this.db
-  //       .select()
-  //       .from(schema.restaurants)
-  //       .where(
-  //         and(
-  //           eq(schema.restaurants.isOpen, true),
-  //           or(
-  //             ilike(schema.restaurants.name, `%${search}%`),
-  //             ilike(schema.restaurants.cuisineType, `%${search}%`),
-  //           ),
-  //         ),
-  //       );
-  //   }
-
-  //   const cached = await this.cacheService.get<
-  //     (typeof schema.restaurants.$inferSelect)[]
-  //   >(CacheKeys.RESTAURANTS_ALL);
-
-  //   if (cached) {
-  //     this.logger.log('Returning restaurants from cache');
-  //     return cached;
-  //   }
-
-  //   this.logger.log('Cache miss — fetching restaurants from DB');
-
-  //   const restaurants = this.db
-  //     .select()
-  //     .from(schema.restaurants)
-  //     .where(eq(schema.restaurants.isOpen, true));
-
-  //   await this.cacheService.set(CacheKeys.RESTAURANTS_ALL, restaurants, 300);
-
-  //   return restaurants;
-  // }
 
   async update(id: string, ownerId: string, dto: UpdateRestaurantDto) {
     const [restaurant] = await this.db
