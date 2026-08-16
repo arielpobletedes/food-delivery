@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function OwnerHomeScreen() {
+export default function CustomerOrdersScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Owner Home</Text>
+      <Text style={styles.text}>Customer Orders</Text>
     </View>
   );
 }
